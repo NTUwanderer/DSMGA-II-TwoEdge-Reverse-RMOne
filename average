@@ -1,0 +1,27 @@
+#!/bin/bash                                                                                            
+if [ "$#" == "0" ]; then
+    echo "./average DIR ell"
+    exit 1
+fi
+
+DIR=$1
+ELL=$2
+
+grep ^NFE $DIR/$ELL-* > tempFile
+
+count=0
+total1=0
+total2=0
+
+awk '{ total1 += $2; total2 += $2*$2; count++ } END { print "NFE:", total1/count, sqrt(total2/count - total1*total1/count/count) }' tempFile
+
+grep popu $DIR/$ELL-* > tempFile
+
+count=0
+total1=0
+total2=0
+
+awk '{ total1 += $2; total2 += $2*$2; count++ } END { print "Popu:", total1/count, sqrt(total2/count - total1*total1/count/count) }' tempFile
+
+wc -l tempFile
+

@@ -1,0 +1,46 @@
+#!/bin/bash                                                                                            
+if [ "$#" == "0" ]; then
+    echo "./average DIR"
+    exit 1
+fi
+
+DIR=$1
+
+echo "SAT 100:"
+grep ^NFE $DIR/SAT/100-* > tempFile
+
+count=0
+total1=0
+total2=0
+
+awk '{ total1 += $2; total2 += $2*$2; count++ } END { print "NFE:", total1/count, sqrt(total2/count - total1*total1/count/count) }' tempFile
+
+grep ^popu $DIR/SAT/100-* > tempFile
+
+count=0
+total1=0
+total2=0
+
+awk '{ total1 += $2; total2 += $2*$2; count++ } END { print "popu:", total1/count, sqrt(total2/count - total1*total1/count/count) }' tempFile
+
+wc -l tempFile
+
+echo "SPIN 400:"
+grep ^NFE $DIR/SPIN/400-* > tempFile
+
+count=0
+total1=0
+total2=0
+
+awk '{ total1 += $2; total2 += $2*$2; count++ } END { print "NFE:", total1/count, sqrt(total2/count - total1*total1/count/count) }' tempFile
+
+grep ^popu $DIR/SPIN/400-* > tempFile
+
+count=0
+total1=0
+total2=0
+
+awk '{ total1 += $2; total2 += $2*$2; count++ } END { print "popu:", total1/count, sqrt(total2/count - total1*total1/count/count) }' tempFile
+
+wc -l tempFile
+
